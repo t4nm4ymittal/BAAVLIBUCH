@@ -42,20 +42,20 @@
    cd your-repo
 
 # For frontend
-cd frontend
-npm install
-npm start
+-cd frontend
+-npm install
+-npm start
 
 # For backend
-cd ../backend
-npm install
-npm start
+-cd /backend
+-npm install
+-npm start
 
 # For Django
-cd core
+-cd core
 
-source venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py runserver
+-source venv\Scripts\activate
+-pip install -r requirements.txt
+-python manage.py runserver
 
 
