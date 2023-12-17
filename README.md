@@ -1,5 +1,23 @@
 # BAAVLIBUCH
+## Checklist
 
+- [x] Set up ExpressJS backend
+- [x] Set up React frontend
+- [x] Implement ExpressJS and React communication
+- [x] Implement Django backend with required functionalities
+- [x] Log frontend connections in ExpressJS
+- [x] Insert text into MongoDB in ExpressJS
+- [x] Call Django API and return ngrams to React
+- [x] Add user ID to MongoDB in ExpressJS
+- [x] Store encrypted photo in ExpressJS using Multer
+- [x] Update friend's friendList in ExpressJS
+- [x] Create a GitHub repository
+- [x] Commit frontend and backend code
+- [x] Create branches for ExpressJS, React, and Django features
+- [x] Merge branches into main
+- [x] Push code to GitHub
+- [ ] Bonus: Containerize each component using Docker
+- [ ] 
 ## Directory Structure
 
 - `frontend/`: React PWA
@@ -39,3 +57,5 @@ cd core
 source venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py runserver
+
+
