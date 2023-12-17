@@ -1,11 +1,22 @@
 import React from "react"
 import './Forms.css'
 import axios from 'axios'
+import ResultPage from "./ResultPage";
+
+import { Link, NavLink } from "react-router-dom";
 export default function Form(){
 
     const [formData, setFormData] = React.useState(
     {id:"",image:"",friendId:"",password:""}
     )
+    const [error, setError] = React.useState(null);
+    const [comparisonResult, setComparisonResult] = React.useState(null);
+    const [showComponent2, setShowComponent2] = React.useState(false);    
+    
+    const handleButtonClick = (e) => {
+        //e.preventDefault();
+        setShowComponent2(true);
+      };
 
     function handleChange(event)
     {   console.log(event.target.value)
@@ -39,12 +50,31 @@ export default function Form(){
             console.error('Error submitting form data:', error);
         }
     }
-    
+    async function handleCompareNgrams(event) {
+        event.preventDefault();
+
+        try {
+            const response = await axios.get('http://localhost:3001/api/compareNgrams');
+
+            setComparisonResult(response.data);
+            setError(null);
+            setShowComponent2(true);
+            console.log('N-Gram Comparison Result:', response.data);
+        } catch (error) {
+            console.error('Error comparing n-grams:', error);
+            setError('Insufficient user fields');
+            setComparisonResult(null);
+            setShowComponent2(true);
+        }
+       
+       // handleButtonClick()
+    }
+   
     return(
        
        <div className="form-box">
         <h1>BAAVLIBUCH</h1>
-        <form onSubmit={handleSubmit}>
+        <form >
             <div className="field1">
             <input
             type="text"
@@ -79,8 +109,20 @@ export default function Form(){
             <br/>
             </div>
             <button onClick = {handleSubmit}className="submitBtn">Submit</button>
+            <button onClick={handleCompareNgrams} className="compareBtn">Compare N-Grams</button>
+            {showComponent2 && <ResultPage comparisonResult={comparisonResult} error={error}/>}
+
+                
+               
+
+                    <NavLink to="/user-list">
+            <button className="userListBtn">Show All Users</button>
+          </NavLink>
+
+             
         </form>
         </div>
+        
     )
 
 }

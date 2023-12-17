@@ -1,0 +1,100 @@
+/* src/components/UserList.css */
+
+:root {
+  --navbar-background: #333; /* Set your navbar background color */
+  --gradient-start: #4e4e4e; /* Set the gradient start color */
+  --gradient-end: #222; /* Set the gradient end color */
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+}
+
+.navbar {
+  background-color: var(--navbar-background);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.user-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the column size */
+  gap: 15px; /* Adjust the gap between cards */
+  padding: 20px;
+}
+
+.user-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px; /* Adjust the padding for the card */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px; /* Adjust the margin for the heading */
+}
+
+.user-heading h2 {
+  font-size: 1.2em; /* Adjust the font size for the heading */
+  margin: 0;
+  color: #333;
+}
+
+.friend-list {
+  margin-top: 8px; /* Adjust the margin for the friend list */
+  color: #777;
+}
+
+.friend-list strong {
+  color: #444;
+}
+
+.friend-list ul {
+  padding-left: 15px;
+  list-style-type: none;
+  margin: 0;
+}
+
+.friend-list li {
+  margin-bottom: 3px; /* Adjust the margin for each list item */
+  color: #888;
+}
+
+.user-image {
+  margin-top: 15px;
+}
+
+.user-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}

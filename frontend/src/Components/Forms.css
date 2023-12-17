@@ -1,51 +1,84 @@
+:root {
+  --navbar-background: #333; /* Set your navbar background color */
+  --gradient-start: #4e4e4e; /* Set the gradient start color */
+  --gradient-end: #222; /* Set the gradient end color */
+}
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(to right, #4caf50, #2196f3);
-  }
-  .form-box {
-    width: 400px;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .field1 {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-  }
-  
-  input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .submitBtn {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submitBtn:hover {
-    background-color: #45a049;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #8a7c7c;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  /* Add more styles as needed */
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+}
+
+.form-box {
+  width: 400px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.field1 {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submitBtn, .compareBtn,.userListBtn {
+  background-color: #007bff;
+  color :#fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.submitBtn:hover, .compareBtn:hover,.userListBtn:hover {
+  background-color: #45a049;
+}
+
+h1 {
+  text-align: center;
+  color: #8a7c7c;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.comparisonResult {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #dff0d8;
+  border: 1px solid #3c763d;
+  border-radius: 4px;
+}
+
+.comparisonResult h2 {
+  color: #3c763d;
+}
+
+.comparisonResult p {
+  margin: 0;
+}
+.error {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8d7da; /* Use a color that indicates an error */
+  border: 1px solid #721c24; /* Use a color that indicates an error */
+  border-radius: 4px;
+}
+
+.error p {
+  margin: 0;
+  color: #721c24; /* Use a color that indicates an error */
+}
