@@ -1,6 +1,21 @@
 # BAAVLIBUCH
 ## Checklist
-
+Overall Performance:
+I am pleased to submit my self-appraisal for the period August 2024 to October 2024. As a recent graduate joining the company, I have been actively working to adapt to the corporate environment and contribute effectively to the team.
+Key Achievements and Contributions:
+ * Successful Completion of Training: I have successfully completed the company's onboarding and training programs, acquiring essential knowledge and skills necessary for my role.
+ * Adaptability: I have demonstrated a willingness to learn and adapt to new challenges and responsibilities.
+ * Contributed in Creation of two new environments in team: Briefly describe any notable achievements or projects you have contributed to.
+Areas for Development:
+While I have made significant progress, there are areas where I believe I can further develop my skills. These include:
+ * [Area 1]: Briefly describe a skill or area where you would like to improve.
+ * [Area 2]: Briefly
+Overall Assessment:
+I am confident that my contributions have been valuable to the team and the company. I am committed to continuous learning and growth, and I look forward to further developing my skills and making a positive impact in my role.
+Thank you for your time and consideration.
+Sincerely,
+[Your Name]
+[Your Position]
 - [x] Set up ExpressJS backend
 - [x] Set up React frontend
 - [x] Implement ExpressJS and React communication
