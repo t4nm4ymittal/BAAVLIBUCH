@@ -1,3 +1,8 @@
+if [ ! -f "$UAT_DIR/$FILENAME" ]; then
+    echo "[$(date)] Source file $UAT_DIR/$FILENAME does not exist." >> "$LOG_FILE"
+    exit 1
+fi
+
 #!/bin/bash
 
 # Variables
