@@ -1,4 +1,5 @@
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,10 +33,18 @@ class KafkaConsumerServiceTest {
     @Test
     void testListenMethodProcessesMessages() {
         // Prepare a mock ConsumerRecord
-        ConsumerRecord<String, String> record = new ConsumerRecord<>("test-topic", 0, 0L, null, "test-message");
+        ConsumerRecord<String, String> record = new ConsumerRecord<>("test-topic", 0, 0L, "key", "test-message");
 
-        // Mock poll method to return a record
-        when(mockConsumer.poll(Duration.ofMillis(100))).thenReturn(Collections.singletonList(record));
+        // Wrap the mock record in a ConsumerRecords object
+        ConsumerRecords<String, String> consumerRecords = new ConsumerRecords<>(
+                Collections.singletonMap(
+                        new org.apache.kafka.common.TopicPartition("test-topic", 0),
+                        Collections.singletonList(record)
+                )
+        );
+
+        // Mock poll method to return the ConsumerRecords object
+        when(mockConsumer.poll(Duration.ofMillis(100))).thenReturn(consumerRecords);
 
         // Execute the listen method for a short duration
         Thread listenThread = new Thread(() -> kafkaConsumerService.listen());
