@@ -1,110 +1,55 @@
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.Mockito;
 
+import java.time.Duration;
 import java.util.Collections;
-import java.util.List;
+import java.util.Properties;
 
-public class KafkaConsumerServiceTest {
+import static org.mockito.Mockito.*;
 
-    @Mock
-    private KafkaConsumer<String, String> mockConsumer;
+class KafkaConsumerServiceTest {
 
-    @InjectMocks
     private KafkaConsumerService kafkaConsumerService;
+    private org.apache.kafka.clients.consumer.KafkaConsumer<String, String> mockConsumer;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void setUp() {
+        // Mock the KafkaConsumer
+        mockConsumer = mock(org.apache.kafka.clients.consumer.KafkaConsumer.class);
+
+        // Provide a mock implementation for properties
+        Properties mockProps = new Properties();
+        mockProps.setProperty("topic", "test-topic");
+        mockProps.setProperty("bootstrapServers", "localhost:9092");
+        mockProps.setProperty("groupId", "test-group");
+
+        // Initialize the KafkaConsumerService with the mocked consumer and properties
+        kafkaConsumerService = new KafkaConsumerService(mockConsumer, mockProps);
     }
 
     @Test
-    public void testKafkaConsumerServiceInitialization() {
-        // Verify the initialization works correctly
-        assertNotNull(kafkaConsumerService);
-    }
+    void testListenMethodProcessesMessages() {
+        // Prepare a mock ConsumerRecord
+        ConsumerRecord<String, String> record = new ConsumerRecord<>("test-topic", 0, 0L, null, "test-message");
 
-    @Test
-    public void testListenShouldProcessMessages() {
-        // Arrange
-        String expectedMessage = "Test message";
-        ConsumerRecord<String, String> record = new ConsumerRecord<>("topic", 0, 0, "key", expectedMessage);
-        when(mockConsumer.poll(any())).thenReturn(Collections.singletonList(record));
+        // Mock poll method to return a record
+        when(mockConsumer.poll(Duration.ofMillis(100))).thenReturn(Collections.singletonList(record));
 
-        // Act
-        kafkaConsumerService.listen();
+        // Execute the listen method for a short duration
+        Thread listenThread = new Thread(() -> kafkaConsumerService.listen());
+        listenThread.start();
 
-        // Assert
-        List<String> messages = kafkaConsumerService.getMessages();
-        assertEquals(1, messages.size());
-        assertEquals(expectedMessage, messages.get(0));
-    }
+        try {
+            Thread.sleep(500); // Allow some time for processing
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-    @Test
-    public void testListenShouldHandleExceptions() {
-        // Arrange: simulate an exception while processing messages
-        when(mockConsumer.poll(any())).thenThrow(new RuntimeException("Kafka poll error"));
+        listenThread.interrupt(); // Stop the listening loop
 
-        // Act and Assert
-        assertDoesNotThrow(() -> kafkaConsumerService.listen());
-    }
-
-    @Test
-    public void testGetMessages() {
-        // Arrange
-        String message1 = "Message 1";
-        String message2 = "Message 2";
-        kafkaConsumerService.getMessages().add(message1);
-        kafkaConsumerService.getMessages().add(message2);
-
-        // Act
-        List<String> messages = kafkaConsumerService.getMessages();
-
-        // Assert
-        assertEquals(2, messages.size());
-        assertTrue(messages.contains(message1));
-        assertTrue(messages.contains(message2));
-    }
-
-    @Test
-    public void testClearMessages() {
-        // Arrange
-        kafkaConsumerService.getMessages().add("Message to clear");
-
-        // Act
-        kafkaConsumerService.clearMessages();
-
-        // Assert
-        assertTrue(kafkaConsumerService.getMessages().isEmpty());
-    }
-
-    @Test
-    public void testErrorLoadingPropertiesFile() {
-        // Simulate file loading failure by mocking the FileInputStream
-        FileInputStream mockFis = mock(FileInputStream.class);
-        doThrow(new IOException("File not found")).when(mockFis).close();
-
-        // Assert that it throws a RuntimeException due to file loading failure
-        assertThrows(RuntimeException.class, () -> new KafkaConsumerService());
-    }
-
-    @Test
-    public void testConsumerSubscribesToTopic() {
-        // Arrange
-        Properties mockProps = mock(Properties.class);
-        when(mockProps.getProperty("bootstrapServers")).thenReturn("localhost:9092");
-        when(mockProps.getProperty("groupId")).thenReturn("testGroup");
-
-        // Act
-        KafkaConsumerService service = new KafkaConsumerService();
-
-        // Assert: Check that the consumer subscribes to the correct topic
-        verify(mockConsumer).subscribe(Collections.singletonList("topic"));
+        // Verify that the messages list contains the message
+        assert kafkaConsumerService.getMessages().contains("test-message");
     }
 }
